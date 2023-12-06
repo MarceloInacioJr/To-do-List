@@ -9,6 +9,7 @@ const Main = () =>{
     const[formLogin, setFormLogin] = useState(true)
     const[email, setEmail] = useState("jr@gmail.com")
     const[password, setPassword] = useState("123456")
+    const[message, setMessage] = useState("")
 
     // register 
     const[registerName, setRegisterName] = useState("")
@@ -37,10 +38,13 @@ const Main = () =>{
             if(user){
                 navigate("/home")
             }else{
-                alert("Dados incorretos")
+                <div className="teste">teste</div>
+                setMessage("Credenciais incorretas")
+                
             }
             
         }).catch((error)=>{
+           
             console.log(error.message)
         })
        
@@ -70,9 +74,11 @@ const Main = () =>{
                                 <input type="password" placeholder="Senha" onChange={e=>setPassword(e.target.value)}/>
                                 <button onClick={()=>{handleLogin()}}>Login</button>
                                 <button onClick={ _ => setFormLogin(false) }>Não possui cadastro? Cadastrar</button>
-                             </div>
                         
+                             </div>
                         </div>
+
+                       
                         :
                         <div className="body-form">
                             <h1>Cadastro</h1>

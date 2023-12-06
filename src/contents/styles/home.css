@@ -1,0 +1,46 @@
+
+
+.body-home{
+    display: grid;
+    position:fixed;
+    top:0;
+    bottom: 0;
+    width: 100vw;
+    grid-template-columns: 6% 94%;
+    background-color: aliceblue;
+   
+}
+
+
+.content-home{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.content-date{
+    margin-bottom: 40px;
+}
+
+
+.message{
+    margin-bottom: 60px;
+}
+
+.list{
+    width: 95%;
+    background-color: aqua;
+}
+
+.list-row{
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 20% 40% 10% 10%;
+}
+
+.description-list{
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,21 @@
+
+
+.navbar-body{
+    height: 100%;
+    background-color: rgb(255, 0, 0);
+    display: flex;  
+    justify-content: center;
+    padding-top:10px;
+}
+
+
+.component{
+    background-color: blue;
+    color: #fff;
+    height: 60px;
+    width: 60px;
+}
+
+.component:hover{
+    cursor: pointer;
+}
