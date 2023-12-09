@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../db/configFirebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import { uid } from 'uid';
-import { findAllByAltText } from '@testing-library/react';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const Home = () => {
 
   // edit 
   const [isEdit, setIsEdit] = useState(false)
-  const [tempUidd, setTempUidd] = useState("")
+
 
   // Realtime database
   const [todo, setTodo] = useState({
@@ -123,7 +122,7 @@ const Home = () => {
   const handleEdit = (todoItem) => {
     setIsEdit(true)
     setTodo(todoItem.todo)
-    setTempUidd(todoItem.uidd)
+    
   }
 
   const handleConfirmEdit = (todoItem) => {
@@ -211,7 +210,10 @@ const Home = () => {
               <div className="description-list">
                 <p>Descrição: {todoItem.todo?.describe || 'sem time '}</p>
               </div>
+              
+              
               {
+                
                 isEdit ? (
                   <div className="form-isEdit">
                     <input
