@@ -8,6 +8,8 @@ import { uid } from 'uid';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [createTaskForm, setCreateTaskForm] = useState(false)
+
   const [nameUser, setnameUser] = useState("")
 
   // timer
@@ -60,12 +62,12 @@ const Home = () => {
     return () => inLog();
   }, []);
 
-  useEffect(()=>{
-    auth.onAuthStateChanged((user)=>{
-      if(user){
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
         const displayName = user.displayName
         setnameUser(displayName || '')
-      }else{
+      } else {
         navigate('/')
       }
     })
@@ -134,7 +136,7 @@ const Home = () => {
   const handleEdit = (todoItem) => {
     setIsEdit(true)
     setTodo(todoItem.todo)
-    
+
   }
 
   const handleConfirmEdit = (todoItem) => {
@@ -163,7 +165,7 @@ const Home = () => {
   return (
     <div className="body-home">
       <div className="navBar" id="id-navbar">
-        <NavBar></NavBar>
+        <NavBar handleCreateTask={()=>setCreateTaskForm(true)}></NavBar>
       </div>
 
       <div className="content-home" id="id-navbar">
@@ -175,7 +177,9 @@ const Home = () => {
         <div className="message">
           <p>Olá <span id='message-name-user'>{nameUser}</span> seja bem-vindo(a)</p>
         </div>
+       {
 
+        createTaskForm?
         <div className="form-task">
           <input
             type="text"
@@ -211,11 +215,22 @@ const Home = () => {
             }}
           />
 
-          <button onClick={writeDatabase}>OK</button>
-          </div>
+          <button onClick={()=>{
+              writeDatabase()
+              setCreateTaskForm(false)
+            }}>OK</button>
 
+          <button onClick={
+           ()=> setCreateTaskForm(false)
+          }>Cancelar</button>
+        </div>
+
+        :
+       <></>
+}
+          
         {todos.map((todoItem) => (
-          <div key={todoItem.uidd||'fallbackKey'} className="list">
+          <div key={todoItem.uidd || 'fallbackKey'} className="list">
             <div className="date-list">{todoItem.todo?.date ? new Date(todoItem.todo.date).toLocaleDateString('pt-BR') : 'sem data'} <span>{
               todoItem.todo?.time || '00:00'}</span></div>
 
@@ -224,10 +239,10 @@ const Home = () => {
               <div className="description-list">
                 <p>Descrição: {todoItem.todo?.describe || 'sem time '}</p>
               </div>
-              
-              
+
+
               {
-                
+
                 isEdit ? (
                   <div className="form-isEdit">
                     <input
