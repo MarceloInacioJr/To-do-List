@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import {createUserWithEmailAndPassword,  signInWithEmailAndPassword} from 'firebase/auth'
+import {createUserWithEmailAndPassword,  signInWithEmailAndPassword, updateProfile} from 'firebase/auth'
 import {auth} from'../db/configFirebase'
 import { useNavigate } from "react-router-dom"
 import './styles/main.css'
@@ -8,9 +8,8 @@ import './styles/reset.css'
     
 const Main = () =>{
     const[formLogin, setFormLogin] = useState(true)
-    const[email, setEmail] = useState("jr@gmail.com")
-    const[password, setPassword] = useState("123456")
-
+    const[email, setEmail] = useState("")
+    const[password, setPassword] = useState("")
 
     // register 
     const[registerName, setRegisterName] = useState("")
@@ -52,10 +51,27 @@ const Main = () =>{
 
     // register
     const handleRegister = ()=>{
+
+
+            // verificando se as senhas esta correta 
+
+            if(password === registerConfirmPassword){
             createUserWithEmailAndPassword(auth, email, password).then((credential)=>{
-                
-                navigate('/home')
+                const user = credential.user;
+                if(user){
+                    // Adicionando nome do user no firebase 
+                    updateProfile(user, {
+                        displayName: registerName,
+                    }).then(()=>{
+                        navigate("/home")
+                    })
+                }
+            }).catch((error) => {
+                console.log(error.message)
             })
+        }else{
+            alert("Senhas divergentes !!!")
+        }
     }
     
     return(
@@ -77,7 +93,7 @@ const Main = () =>{
                  formLogin?
 
                         <div className="body-form">
-                             <h1 className="form-title">Login</h1>
+                             <h1 className="form-login-title">Login</h1>
                             
                              <div className="form-login-content">
                                 <div className="input">
@@ -98,7 +114,7 @@ const Main = () =>{
                        
                         :
                         <div className="body-form">
-                            <h1 className="form-title">Cadastro</h1>
+                            <h1 className="form-register-title">Cadastro</h1>
 
                             <div className="form-register-content">
                                 
@@ -123,7 +139,7 @@ const Main = () =>{
                             </div>
                             <div className="form-button">
                                 <button className="button-login" onClick={ _=>{handleRegister()}}>Cadastrar e entrar</button>
-                                <button onClick={ _=>setFormLogin(true)}>Já possui cadastro? Login</button>
+                                <p>Já possui cadastro?<span className="form-login-span" onClick={()=>{}}> Login</span></p>
                             </div>
                     </div>
                     

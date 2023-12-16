@@ -8,6 +8,7 @@ import { uid } from 'uid';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [nameUser, setnameUser] = useState("")
 
   // timer
   const [currentUrl, setCurrentUrl] = useState(false);
@@ -58,6 +59,17 @@ const Home = () => {
     });
     return () => inLog();
   }, []);
+
+  useEffect(()=>{
+    auth.onAuthStateChanged((user)=>{
+      if(user){
+        const displayName = user.displayName
+        setnameUser(displayName || '')
+      }else{
+        navigate('/')
+      }
+    })
+  })
 
   // Date
   const dateToday = () => {
@@ -161,7 +173,7 @@ const Home = () => {
         </div>
 
         <div className="message">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p>Seja bem vindo {nameUser}</p>
 
           <input
             type="text"
