@@ -51,8 +51,6 @@ const Main = () =>{
 
     // register
     const handleRegister = ()=>{
-
-
             // verificando se as senhas esta correta 
 
             if(password === registerConfirmPassword){

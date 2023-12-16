@@ -173,8 +173,10 @@ const Home = () => {
         </div>
 
         <div className="message">
-          <p>Seja bem vindo {nameUser}</p>
+          <p>Olá <span id='message-name-user'>{nameUser}</span> seja bem-vindo(a)</p>
+        </div>
 
+        <div className="form-task">
           <input
             type="text"
             placeholder="Titulo"
@@ -210,7 +212,7 @@ const Home = () => {
           />
 
           <button onClick={writeDatabase}>OK</button>
-        </div>
+          </div>
 
         {todos.map((todoItem) => (
           <div key={todoItem.uidd||'fallbackKey'} className="list">

@@ -2,20 +2,54 @@
 
 .navbar-body{
     height: 100%;
-    background-color: rgb(255, 0, 0);
+    background-color: #06011B;
     display: flex;  
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     padding-top:10px;
 }
 
 
-.component{
-    background-color: blue;
+.component-navbar-button{
+    margin-top: 20px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: #fff;
-    height: 60px;
-    width: 60px;
+    height: 70px;
+    width: 70px;
+    box-sizing: border-box;
+    transition: 2s;
 }
 
-.component:hover{
+.component-navbar-button:hover{
     cursor: pointer;
+    background-color: #0e023ffd;
+    border-radius: 5px;
+}
+
+.navbar-legend p{
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.navbar-img {
+    height:40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#img-signout{
+    background-image: url('../../../public/img/img-navbar/signout.png');
+}
+
+#img-addtask{
+    background-image: url('../../../public/img/img-navbar/addtask.png');
+}
+
+#legend-create-home p{
+    font-size: .85rem !important
 }

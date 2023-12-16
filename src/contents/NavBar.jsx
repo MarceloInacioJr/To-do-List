@@ -3,7 +3,7 @@ import './styles/reset.css'
 import { auth } from '../db/configFirebase'
 import { signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+
 
 const NavBar = () => {
     const navigate = useNavigate();
@@ -19,10 +19,21 @@ const NavBar = () => {
 
     return (
         <div className="navbar-body">
-            <div className="component" onClick={handleSignOut}>
-                <div className="navbar-img"></div>
-                <p className="navbar-leg">sair</p>
+            
+            <div className="component-navbar-button" onClick={handleSignOut}>
+                <div className="navbar-img" id='img-signout'></div>
+                <div className="navbar-legend">
+                    <p>Sair</p>
+                </div>
             </div>
+            <div className="component-navbar-button" onClick={handleSignOut}>
+                <div className="navbar-img" id='img-addtask'></div>
+                <div className="navbar-legend" id="legend-create-home">
+                    <p>Criar tarefa</p>
+                </div>
+            </div>
+            
+
         </div>
     );
 };
