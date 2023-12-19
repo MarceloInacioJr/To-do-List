@@ -1,3 +1,9 @@
+/* var */
+:root{
+    --font-color: #0e023ffd;
+    --backgound-title-task:#0e023ffd;
+}
+
 
 
 .body-home{
@@ -7,8 +13,7 @@
     bottom: 0;
     width: 100vw;
     grid-template-columns: 6% 94%;
-    background-color: aliceblue;
-   
+ 
 }
 
 
@@ -35,21 +40,6 @@
     margin-bottom: 60px;
 }
 
-.list{
-    width: 95%;
-    background-color: aqua;
-}
-
-.list-row{
-    display: grid;
-    justify-content: space-between;
-    grid-template-columns: 20% 40% 10% 10%;
-}
-
-.description-list{
-    display: flex;
-    justify-content: center;
-}
 
 /* timer */
 #timer{
@@ -73,4 +63,68 @@
 
 #message-name-user{
     font-weight: bolder;
+}
+
+.list-task-title{
+    display: flex;
+    align-items: start;
+    width: 95%;
+    padding-left: 1%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.list-task-title h1{
+    color: var(--font-color);
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+
+/* list task */
+
+.list{
+    
+    width: 95%;
+    border:1px solid red;
+    margin-bottom: 2%;
+    
+}
+
+.title-task
+{
+    
+    width:25rem;
+    max-width: 25rem;
+    text-wrap: nowrap;
+    border: 1px solid green;
+}
+
+.task-content{
+    display: grid;
+    justify-content:space-between;
+    align-items: center;
+    grid-template-columns: 20% 40% 10%;
+}
+
+.description-list{
+    display: flex;
+    justify-content: center;
+}
+
+/* figure and triangle */
+
+.figure{
+    background-color: var(--backgound-title-task);
+    padding: 10px;
+    height: 30px;
+width: auto;
+    margin-top: 10px;
+    margin-left: 10px;
+    color: aliceblue;
+    display: flex;
+
+    justify-content: center;
+    align-items: center ;
+    font-size: 25px;
 }

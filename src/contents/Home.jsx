@@ -165,7 +165,7 @@ const Home = () => {
   return (
     <div className="body-home">
       <div className="navBar" id="id-navbar">
-        <NavBar handleCreateTask={()=>setCreateTaskForm(true)}></NavBar>
+        <NavBar handleCreateTask={() => setCreateTaskForm(true)}></NavBar>
       </div>
 
       <div className="content-home" id="id-navbar">
@@ -177,65 +177,77 @@ const Home = () => {
         <div className="message">
           <p>Olá <span id='message-name-user'>{nameUser}</span> seja bem-vindo(a)</p>
         </div>
-       {
 
-        createTaskForm?
-        <div className="form-task">
-          <input
-            type="text"
-            placeholder="Titulo"
-            value={todo.title}
-            onChange={(e) => {
-              setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Descrição"
-            value={todo.describe}
-            onChange={(e) => {
-              setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
-            }}
-          />
-
-          <input
-            type="date"
-            value={todo.date}
-            onChange={(e) => {
-              setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
-            }}
-          />
-
-          <input
-            type="time"
-            placeholder="List"
-            value={todo.time}
-            onChange={(e) => {
-              setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
-            }}
-          />
-
-          <button onClick={()=>{
-              writeDatabase()
-              setCreateTaskForm(false)
-            }}>OK</button>
-
-          <button onClick={
-           ()=> setCreateTaskForm(false)
-          }>Cancelar</button>
+        <div className="list-task-title">
+          <h1>Tarefas</h1>
         </div>
+        {
 
-        :
-       <></>
-}
-          
+          createTaskForm ?
+            <div className="form-task">
+              <input
+                type="text"
+                placeholder="Titulo"
+                value={todo.title}
+                onChange={(e) => {
+                  setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Descrição"
+                value={todo.describe}
+                onChange={(e) => {
+                  setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
+                }}
+              />
+
+              <input
+                type="date"
+                value={todo.date}
+                onChange={(e) => {
+                  setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
+                }}
+              />
+
+              <input
+                type="time"
+                placeholder="List"
+                value={todo.time}
+                onChange={(e) => {
+                  setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
+                }}
+              />
+
+              <button onClick={() => {
+                writeDatabase()
+                setCreateTaskForm(false)
+              }}>OK</button>
+
+              <button onClick={
+                () => setCreateTaskForm(false)
+              }>Cancelar</button>
+            </div>
+
+            :
+            <></>
+        }
+
         {todos.map((todoItem) => (
           <div key={todoItem.uidd || 'fallbackKey'} className="list">
             <div className="date-list">{todoItem.todo?.date ? new Date(todoItem.todo.date).toLocaleDateString('pt-BR') : 'sem data'} <span>{
               todoItem.todo?.time || '00:00'}</span></div>
 
-            <div className="list-row">
-              <div className="title-list">{todoItem.todo?.title || 'sem titulo'}</div>
+            <div className="task-content">
+              <div className="title-task">
+                <div className="triangle">
+                <div className="figure">
+                    {todoItem.todo?.title || 'Sem titulo'}
+                  
+                </div>
+                </div>
+                  
+              </div>
               <div className="description-list">
                 <p>Descrição: {todoItem.todo?.describe || 'sem time '}</p>
               </div>
