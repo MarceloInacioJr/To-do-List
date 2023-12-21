@@ -6,6 +6,7 @@ import { auth, db } from '../db/configFirebase';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import { uid } from 'uid';
 
+
 const Home = () => {
   const navigate = useNavigate();
   const [createTaskForm, setCreateTaskForm] = useState(false)
@@ -117,11 +118,14 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, [currentUrl]);
 
+
   // Add list database
   const writeDatabase = () => {
     const uidd = uid();
+    const timestamp = Date.now()
+
     set(ref(db, `${auth.currentUser.uid}/${uidd}`), {
-      todo: todo,
+      todo: { ...todo, timestamp },
       uidd: uidd,
     });
     setTodo({
@@ -154,6 +158,7 @@ const Home = () => {
       describe: '',
       date: '',
       time: '',
+      timestamp: 0,
     });
   }
 
@@ -161,6 +166,25 @@ const Home = () => {
   const handleDelete = (uid) => {
     remove(ref(db, `/${auth.currentUser.uid}/${uid}`))
   }
+
+  // format date in pt-br
+  const formatDate = (date) => {
+    let dateObj = new Date()
+    let dateToday = dateObj.toISOString().split('T')[0].replace(/-/g, '/').split("/").reverse().join('/')
+
+    let dateFormated = date.replace(/-/g, '/').split("/").reverse().join('/')
+    if (dateToday !== dateFormated) {
+      return <><span className="span-day">{ dateFormated }</span> -</>
+    } else {
+      return <><span className="span-day">Hoje  </span> -</>
+    } 
+
+  }
+
+  // sort list
+  const sortedTodo = todos.sort((a, b) => {
+    return b.todo.timestamp - a.todo.timestamp
+  })
 
   return (
     <div className="body-home">
@@ -232,78 +256,89 @@ const Home = () => {
             :
             <></>
         }
+        {
+          sortedTodo.map((todoItem) => (
+            <div key={todoItem.uidd || 'fallbackKey'} className="list">
+              <div className="date-list">{(
+                todoItem.todo?.date ?
+                  formatDate(todoItem.todo.date) : 'sem data'
 
-        {todos.map((todoItem) => (
-          <div key={todoItem.uidd || 'fallbackKey'} className="list">
-            <div className="date-list">{todoItem.todo?.date ? new Date(todoItem.todo.date).toLocaleDateString('pt-BR') : 'sem data'} <span>{
-              todoItem.todo?.time || '00:00'}</span></div>
+              )} <span>{
+                todoItem.todo?.time || '00:00'}</span></div>
 
-            <div className="task-content">
-              <div className="title-task">
-                <div className="triangle">
-                <div className="figure">
-                    {todoItem.todo?.title || 'Sem titulo'}
-                  
-                </div>
-                </div>
-                  
-              </div>
-              <div className="description-list">
-                <p>Descrição: {todoItem.todo?.describe || 'sem time '}</p>
-              </div>
+              <div className="task-content">
+                <div className="title-task">
+                  <div className="triangle">
+                    <div className="figure">
+                      {todoItem.todo?.title || 'Sem titulo'}
 
-
-              {
-
-                isEdit ? (
-                  <div className="form-isEdit">
-                    <input
-                      type="text"
-                      className='input title-form'
-                      value={todo.title}
-                      placeholder='Titulo'
-                      onChange={e => {
-                        setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
-                      }}
-                    />
-                    <input
-                      type="text"
-                      className='input title-form'
-                      value={todo.describe}
-                      placeholder='Descrição'
-                      onChange={e => {
-                        setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
-                      }}
-                    />
-                    <input
-                      type="date"
-                      className='input title-form'
-                      value={todo.date}
-                      onChange={e => {
-                        setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
-                      }}
-                    />
-                    <input
-                      type="time"
-                      className='input title-form'
-                      value={todo.time}
-                      onChange={e => {
-                        setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
-                      }}
-                    />
-                    <button onClick={() => handleConfirmEdit(todoItem)}>Confirmar</button>
-                    <button onClick={() => { setIsEdit(false) }}>Cancelar</button>
+                    </div>
                   </div>
-                ) : (
-                  <div className="btn-noEdit">
-                    <button onClick={() => handleEdit(todoItem)}>Editar</button>
-                    <button onClick={() => handleDelete(todoItem.uidd)}>Excluir</button>
-                  </div>
-                )
-              }
+
+                </div>
+                <div className="description-list">
+                  <p>Descrição: {todoItem.todo?.describe || 'sem time '}</p>
+                </div>
+
+                {
+                  isEdit ? (
+                    <div className="form-isEdit">
+                      <input
+                        type="text"
+                        className='input title-form'
+                        value={todo.title}
+                        placeholder='Titulo'
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
+                        }}
+                      />
+
+                      <input
+                        type="text"
+                        className='input title-form'
+                        value={todo.describe}
+                        placeholder='Descrição'
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
+                        }}
+                      />
+
+                      <input
+                        type="date"
+                        className='input title-form'
+                        value={todo.date}
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
+                        }}
+                      />
+
+                      <input
+                        type="time"
+                        className='input title-form'
+                        value={todo.time}
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
+                        }}
+                      />
+
+                      <button onClick={() => handleConfirmEdit(todoItem)}>Confirmar</button>
+                      <button onClick={() => { setIsEdit(false) }}>Cancelar</button>
+                    </div>
+
+                  ) : (
+                    <div className="btn-noEdit">
+                      <button onClick={() => handleEdit(todoItem)}>Editar</button>
+                      <button onClick={() => handleDelete(todoItem.uidd)}>Excluir</button>
+                    </div>
+                  )
+                }
+              </div>
+              <div className="hr-content">
+                <div className="hr-line"></div>
+              </div>
             </div>
-          </div>
-        ))}
+
+          ))}
       </div>
     </div>
   );

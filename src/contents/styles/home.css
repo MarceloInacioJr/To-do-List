@@ -19,9 +19,12 @@
 
 .content-home{
     padding: 10px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: auto;
+    overflow-x: auto;
 }
 
 /* content-date */
@@ -84,47 +87,80 @@
 /* list task */
 
 .list{
-    
     width: 95%;
-    border:1px solid red;
+    height: auto;
     margin-bottom: 2%;
-    
 }
 
 .title-task
 {
-    
     width:25rem;
+    display: flex;   
     max-width: 25rem;
     text-wrap: nowrap;
-    border: 1px solid green;
+    
 }
 
 .task-content{
     display: grid;
     justify-content:space-between;
     align-items: center;
-    grid-template-columns: 20% 40% 10%;
+    grid-template-columns: 15% 40% 15%;
 }
+
+.task-content p{
+    display: flex;
+    flex-wrap: wrap;
+    text-align:left;
+    font-size: 20px;
+    color:var(--font-color);
+}
+
 
 .description-list{
     display: flex;
     justify-content: center;
 }
 
+.date-list{
+    color: #3e3e3e;
+    margin-left: -10px;
+    margin-bottom: 5px;
+}
+
+.span-day{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+
 /* figure and triangle */
 
 .figure{
     background-color: var(--backgound-title-task);
-    padding: 10px;
+    border-radius: 13px;
+    padding: 5px 15px;
     height: 30px;
-width: auto;
-    margin-top: 10px;
-    margin-left: 10px;
+    width: auto;
     color: aliceblue;
     display: flex;
-
     justify-content: center;
     align-items: center ;
     font-size: 25px;
 }
+
+/* line-hr */
+.hr-content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    
+}
+
+.hr-line{
+    width: 60vw;
+    border-bottom: 1px solid #ccc
+}
+
