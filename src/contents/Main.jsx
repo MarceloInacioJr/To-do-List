@@ -137,7 +137,7 @@ const Main = () =>{
                             </div>
                             <div className="form-button">
                                 <button className="button-login" onClick={ _=>{handleRegister()}}>Cadastrar e entrar</button>
-                                <p>Já possui cadastro?<span className="form-login-span" onClick={()=>{}}> Login</span></p>
+                                <p>Já possui cadastro?<span className="form-login-span" onClick={()=>{setFormLogin(true)}}> Login</span></p>
                             </div>
                     </div>
                     
