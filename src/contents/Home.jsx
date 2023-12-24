@@ -208,51 +208,80 @@ const Home = () => {
         {
 
           createTaskForm ?
-            <div className="form-task">
-              <input
-                type="text"
-                placeholder="Titulo"
-                value={todo.title}
-                onChange={(e) => {
-                  setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Descrição"
-                value={todo.describe}
-                onChange={(e) => {
-                  setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
-                }}
-              />
+            <>
+              <div className="form-isEdit-body">
+                <div className="form-isEdit-content ">
+                  <div className="form-isEdit-title">
+                    <h1>Criar tarefa</h1>
+                  </div>
+                  <div className="form-content">
+                    <div className="form">
 
-              <input
-                type="date"
-                value={todo.date}
-                onChange={(e) => {
-                  setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
-                }}
-              />
+                      <div className="edit-form-component-input font-input-text input-title-edit">
+                        <label htmlFor="e-title">Titulo</label>
+                        <input
+                          type="text"
+                          className='input title-form'
+                          value={todo.title}
+                          onChange={(e) => {
+                            setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
+                          }}
+                        />
+                      </div>
 
-              <input
-                type="time"
-                placeholder="List"
-                value={todo.time}
-                onChange={(e) => {
-                  setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
-                }}
-              />
+                      <div className="edit-form-component-input font-input-text input-description-edit">
+                        <label htmlFor="e-discription">Descrição</label>
+                        <input
+                          type="text"
+                          value={todo.describe}
+                          onChange={(e) => {
+                            setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
+                          }}
+                        />
+                      </div>
+                      <div className="edit-form-component-input font-input-date-time input-date-edit">
+                        <label htmlFor="e-date">Data</label>
+                        <input
+                          type="date"
+                          name='e-date'    
+                          value={todo.date}
+                          onChange={(e) => {
+                            setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
+                          }}
+                        />
+                      </div>
 
-              <button onClick={() => {
-                writeDatabase()
-                setCreateTaskForm(false)
-              }}>OK</button>
+                      <div className="edit-form-component-input font-input-date-time input-time-edit">
+                        <label htmlFor="e-time">Hora</label>
+                        <input
+                          type="time"
+                          name="e-time"
+                          className='title-form'
+                          value={todo.time}
+                          onChange={(e) => {
+                            setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
+                          }}
+                        />
+                      </div>
+                      <div className="buttons-edit" id='buttons-edit'>
+                        <button className='button-edit' onClick={() => {
+                          writeDatabase()
+                          setCreateTaskForm(false)
 
-              <button onClick={
-                () => setCreateTaskForm(false)
-              }>Cancelar</button>
-            </div>
+                        }}>OK</button>
 
+                        <button
+                        className='button-edit-cancel'
+                        onClick={
+                          () => setCreateTaskForm(false)
+                        }>Cancelar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="cover-isEdit"></div>
+            </>
             :
             <></>
         }
@@ -310,7 +339,7 @@ const Home = () => {
                           <div className="form-content">
                             <div className="form">
 
-                              <div id="input-title-edit" className="edit-form-component-input font-input-text">
+                              <div className="edit-form-component-input font-input-text input-title-edit">
                                 <label htmlFor="e-title">Título</label>
                                 <input
                                   type="text"
@@ -323,7 +352,7 @@ const Home = () => {
                                 />
                               </div>
 
-                              <div id="input-description-edit" className="edit-form-component-input font-input-text">
+                              <div className="edit-form-component-input font-input-text input-description-edit">
                                 <label htmlFor="e-description">Descrição</label>
                                 <input
                                   type="text"
@@ -337,12 +366,11 @@ const Home = () => {
                                 />
                               </div>
 
-                              <div id="input-date-edit" className="edit-form-component-input font-input-date-time">
+                              <div className="edit-form-component-input font-input-date-time input-date-edit">
                                 <label htmlFor="e-date">Data</label>
                                 <input
                                   type="date"
                                   name='e-date'
-                                  className='title-form'
                                   value={todo.date}
                                   onChange={e => {
                                     setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
@@ -350,12 +378,11 @@ const Home = () => {
                                 />
                               </div>
 
-                              <div id="input-time-edit" className="edit-form-component-input font-input-date-time">
+                              <div className="edit-form-component-input font-input-date-time input-time-edit">
                                 <label htmlFor="e-time">Hora</label>
                                 <input
                                   type="time"
                                   name='e-time'
-                                  className=' title-form'
                                   value={todo.time}
                                   onChange={e => {
                                     setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
@@ -363,8 +390,8 @@ const Home = () => {
                                 />
                               </div>
                               <div className="buttons-edit" id='buttons-edit'>
-                              <button id='button-edit' onClick={() => handleConfirmEdit(todoItem)}>Confirmar</button>
-                              <button id='button-edit-cancel' onClick={() => { setIsEdit(false) }}>Cancelar</button>
+                                <button className='button-edit disable' onClick={() => handleConfirmEdit(todoItem)}>Confirmar</button>
+                                <button className='button-edit-cancel' onClick={() => { setIsEdit(false) }}>Cancelar</button>
                               </div>
                             </div>
                           </div>

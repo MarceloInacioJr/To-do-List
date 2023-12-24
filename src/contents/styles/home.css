@@ -378,31 +378,31 @@
 
 
 
-
-#input-title-edit{
+/* inputs */
+.input-title-edit{
     grid-area: e-title;
    
 }
 
-#input-description-edit{
+.input-description-edit{
     grid-area: e-description ;
 }
 
-#input-date-edit{
+.input-date-edit{
     grid-area: e-date;
     
 }
 
-#input-time-edit{
+.input-time-edit{
     grid-area: e-time;
 }
 
-#buttons-edit{
+.buttons-edit{
     grid-area: eb-edit;
 }
 
 
-#buttons-edit{
+.buttons-edit{
     height: 60px;
     width: 100%;
     margin-top: 10px;
@@ -425,19 +425,19 @@
     
 }
 
-#button-edit{
+.button-edit{
     background-color: #1C8A00;
 }
 
-#button-edit:hover{
+.button-edit:hover{
     background-color: #1b8002;
 }
 
-#button-edit-cancel{
+.button-edit-cancel{
     background-color: #A90000;
 }
 
-#button-edit-cancel:hover{
+.button-edit-cancel:hover{
     background-color: #960505;
 }
 
