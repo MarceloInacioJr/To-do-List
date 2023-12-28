@@ -20,6 +20,7 @@ const Home = () => {
 
   // edit 
   const [isEdit, setIsEdit] = useState(false)
+  const [editForm, setEditForm] = useState(null)
 
 
   // Realtime database
@@ -128,12 +129,7 @@ const Home = () => {
       todo: { ...todo, timestamp },
       uidd: uidd,
     });
-    setTodo({
-      title: '',
-      describe: '',
-      date: '',
-      time: '',
-    });
+    clearInputs()
   };
 
   // Edit list
@@ -153,13 +149,7 @@ const Home = () => {
       },
     });
     setIsEdit(false);  // Defina o modo de edição como falso
-    setTodo({
-      title: '',
-      describe: '',
-      date: '',
-      time: '',
-      timestamp: 0,
-    });
+    clearInputs()
   }
 
   // Delete list
@@ -185,6 +175,18 @@ const Home = () => {
   const sortedTodo = todos.sort((a, b) => {
     return b.todo.timestamp - a.todo.timestamp
   })
+
+
+  // clear inputs 
+  const clearInputs = () =>{
+    setTodo({
+      title: '',
+      describe: '',
+      date: '',
+      time: '',
+      timestamp: 0,
+    });
+  }
 
   return (
     <div className="body-home">
@@ -284,8 +286,90 @@ const Home = () => {
             </>
             :
             <></>
+
+        }
+
+        {
+        /* Form Edit */
+        isEdit ? (
+                
+          <>
+         
+            <div className="form-isEdit-body">
+              <div className="form-isEdit-content">
+                <div className="form-isEdit-title">
+                  <h1>Editar</h1>
+                </div>
+                <div className="form-content">
+                  <div className="form">
+
+                    <div className="edit-form-component-input font-input-text input-title-edit">
+                      <label htmlFor="e-title">Título</label>
+                      <input
+                        type="text"
+                        name='e-title'
+                        className='input title-form'
+                        value={todo.title}
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
+                        }}
+                      />
+                    </div>
+
+                    <div className="edit-form-component-input font-input-text input-description-edit">
+                      <label htmlFor="e-description">Descrição</label>
+                      <input
+                        type="text"
+                        name='e-discription'
+                        className='input title-form'
+                        value={todo.describe}
+                        placeholder='Descrição'
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
+                        }}
+                      />
+                    </div>
+
+                    <div className="edit-form-component-input font-input-date-time input-date-edit">
+                      <label htmlFor="e-date">Data</label>
+                      <input
+                        type="date"
+                        name='e-date'
+                        value={todo.date}
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
+                        }}
+                      />
+                    </div>
+
+                    <div className="edit-form-component-input font-input-date-time input-time-edit">
+                      <label htmlFor="e-time">Hora</label>
+                      <input
+                        type="time"
+                        name='e-time'
+                        value={todo.time}
+                        onChange={e => {
+                          setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
+                        }}
+                      />
+                    </div>
+                    <div className="buttons-edit" id='buttons-edit'>
+                      <button className='button-edit disable' onClick={() => {handleConfirmEdit(editForm)}}>Confirmar</button>
+                      <button className='button-edit-cancel' onClick={() => { setIsEdit(false) }}>Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="cover-isEdit"></div>
+            </>
+        ) : null
+    
+        
+        
         }
         {
+          // list
           sortedTodo.map((todoItem) => (
             <div className="list-body">
               <div key={todoItem.uidd || 'fallbackKey'} className="list">
@@ -311,7 +395,11 @@ const Home = () => {
 
                   {
                     <div className="btn-noEdit">
-                      <div className='btn-edit' onClick={() => handleEdit(todoItem)}>
+                      <div className='btn-edit' onClick={() => {
+                            handleEdit(todoItem)
+                            setEditForm(todoItem)
+                          }
+                    }>
                         <div id="img-button-editEditar"></div>
                         <p>Editar</p>
                       </div>
@@ -327,80 +415,7 @@ const Home = () => {
                   <div className="hr-line"></div>
                 </div>
               </div>
-              <>
-                {
-                  isEdit ? (
-                    <>
-                      <div className="form-isEdit-body">
-                        <div className="form-isEdit-content">
-                          <div className="form-isEdit-title">
-                            <h1>Editar</h1>
-                          </div>
-                          <div className="form-content">
-                            <div className="form">
-
-                              <div className="edit-form-component-input font-input-text input-title-edit">
-                                <label htmlFor="e-title">Título</label>
-                                <input
-                                  type="text"
-                                  name='e-title'
-                                  className='input title-form'
-                                  value={todo.title}
-                                  onChange={e => {
-                                    setTodo(prevTodo => ({ ...prevTodo, title: e.target.value }));
-                                  }}
-                                />
-                              </div>
-
-                              <div className="edit-form-component-input font-input-text input-description-edit">
-                                <label htmlFor="e-description">Descrição</label>
-                                <input
-                                  type="text"
-                                  name='e-discription'
-                                  className='input title-form'
-                                  value={todo.describe}
-                                  placeholder='Descrição'
-                                  onChange={e => {
-                                    setTodo(prevTodo => ({ ...prevTodo, describe: e.target.value }));
-                                  }}
-                                />
-                              </div>
-
-                              <div className="edit-form-component-input font-input-date-time input-date-edit">
-                                <label htmlFor="e-date">Data</label>
-                                <input
-                                  type="date"
-                                  name='e-date'
-                                  value={todo.date}
-                                  onChange={e => {
-                                    setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
-                                  }}
-                                />
-                              </div>
-
-                              <div className="edit-form-component-input font-input-date-time input-time-edit">
-                                <label htmlFor="e-time">Hora</label>
-                                <input
-                                  type="time"
-                                  name='e-time'
-                                  value={todo.time}
-                                  onChange={e => {
-                                    setTodo(prevTodo => ({ ...prevTodo, time: e.target.value }));
-                                  }}
-                                />
-                              </div>
-                              <div className="buttons-edit" id='buttons-edit'>
-                                <button className='button-edit disable' onClick={() => handleConfirmEdit(todoItem)}>Confirmar</button>
-                                <button className='button-edit-cancel' onClick={() => { setIsEdit(false) }}>Cancelar</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="cover-isEdit"></div>
-                    </>
-                  ) : null}
-              </>
+              
             </div>
 
           ))}
@@ -409,4 +424,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home
