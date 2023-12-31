@@ -41,13 +41,6 @@
 }
 
 
-.message{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 60px;
-}
-
 
 /* timer */
 #timer{
@@ -64,10 +57,26 @@
 
 /* message welcome */
 
-.message{
-    font-size: 30px;
-    
+.message-welcome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+    gap: 40px;
 }
+
+.message-welcome #welcome{
+    font-size: 30px;
+}
+
+.message-welcome #warning{
+    font-size: 15px;
+    color: #960505;
+
+
+}
+
 
 #message-name-user{
     font-weight: bolder;
@@ -99,9 +108,11 @@
 }
 
 .list-body{
+    
+    height: 12%;
     width: 80%;
-    padding: 10px 3% 0;
-    background-color: #f0f0f0;
+    padding: 2px 3% 0;
+    background-color: #f5f5f5;
     border-radius: 10px;
     box-sizing: border-box ;
     margin-bottom: 10px;

@@ -200,8 +200,9 @@ const Home = () => {
           <p id="date-today">{dateToday()}</p>
         </div>
 
-        <div className="message">
-          <p>Olá <span id='message-name-user'>{nameUser}</span> seja bem-vindo(a)</p>
+        <div className="message-welcome">
+          <p id='welcome'>Olá <span id='message-name-user'>{nameUser}</span> seja bem-vindo(a)</p>
+          <p id='warning'>Atenção: fica ao seu critério excluir as tarefas.</p>
         </div>
 
         <div className="list-task-title">
@@ -368,7 +369,7 @@ const Home = () => {
         }
         {
           // list
-          sortedTodo.map((todoItem) => (
+          todos.reverse().map((todoItem) => (
             <div key={todoItem.uidd || 'falbackKey'} className="list-body">
               <div className="list">
                 <div className="date-list">{(
@@ -410,7 +411,7 @@ const Home = () => {
                   }
                 </div>
                 <div className="hr-content">
-                  <div className="hr-line"></div>
+                  {/* <div className="hr-line"></div> */}
                 </div>
               </div>
 

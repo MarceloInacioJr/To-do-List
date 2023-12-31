@@ -4,7 +4,7 @@ import { auth } from '../db/configFirebase'
 import { useNavigate } from "react-router-dom"
 import './styles/main.css'
 import './styles/reset.css'
-import { set } from "firebase/database"
+
 
 
 const Main = () => {
@@ -43,17 +43,22 @@ const Main = () => {
 
             if (user) {
                 navigate("/home")
-            } 
+            } else{
+               
+            }
 
         }).catch((error) => {
             console.log(error.message)
-            setMessages("Email ou senha incorreto!")
+            
+            setMessages("Email ou senha incorreto !")
         })
 
     }
 
+
     // Register
     const handleRegister = () => {
+
 
         // CheckiheckMessages(email) if the passwords are correct 
         if (password === registerConfirmPassword) {
@@ -69,17 +74,17 @@ const Main = () => {
                 }
             }).catch((error) => {   
                 console.log(error.message)
+                
                 if(password.length < 6 || registerConfirmPassword.length < 6){
                 setMessages('Por favor digite uma senha com mais de 6 caracteres!')
-                }else
+                } 
+
                 setMessages('Email já cadastrado!')
             })
         } else {
              setMessages('Senhas divergentes!')
         }
     }
-
-
 
     return (
         <div className="body-main">
