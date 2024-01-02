@@ -119,7 +119,7 @@ const Main = () => {
                                     <label htmlFor="password-login">Senha</label>
                                     <div className="input-password">
                                         <input type="password" id="login-input-password" name="password-login" onChange={e => setPassword(e.target.value)} />
-                                        <div className="img-body">
+                                        <div className="img-eye-body">
                                             {/* view password */
                                             viewPassword?(
                                                  

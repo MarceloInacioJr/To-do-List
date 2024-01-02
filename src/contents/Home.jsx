@@ -155,6 +155,7 @@ const Home = () => {
   // Delete list
   const handleDelete = (uid) => {
     remove(ref(db, `/${auth.currentUser.uid}/${uid}`))
+    clearInputs()
   }
 
   // format date in pt-br
