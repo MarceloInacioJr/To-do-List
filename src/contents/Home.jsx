@@ -148,7 +148,7 @@ const Home = () => {
         time: todo.time || todoItem.todo.time,
       },
     });
-    setIsEdit(false);  // Defina o modo de edição como falso
+    setIsEdit(false); 
     clearInputs()
   }
 
@@ -356,7 +356,10 @@ const Home = () => {
                       </div>
                       <div className="buttons-edit" id='buttons-edit'>
                         <button className='button-edit disable' onClick={() => { handleConfirmEdit(editForm) }}>Confirmar</button>
-                        <button className='button-edit-cancel' onClick={() => { setIsEdit(false) }}>Cancelar</button>
+                        <button className='button-edit-cancel' onClick={() => { 
+                          setIsEdit(false)
+                          clearInputs()
+                          }}>Cancelar</button>
                       </div>
                     </div>
                   </div>
@@ -402,7 +405,9 @@ const Home = () => {
                         <div id="img-button-editEditar"></div>
                         <p>Editar</p>
                       </div>
-                      <div className='btn-cancel' onClick={() => handleDelete(todoItem.uidd)}>
+                      <div className='btn-cancel' onClick={() => {
+                        handleDelete(todoItem.uidd)
+                        }}>
                         <div id="img-button-delete"></div>
                         <p>Excluir</p>
                       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth } from '../db/configFirebase'
 import { useNavigate } from "react-router-dom"
 import './styles/main.css'
@@ -38,7 +38,10 @@ const Main = () => {
 
     // Login
     const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password).then((credential) => {
+
+
+        signInWithEmailAndPassword(auth, email.trim(), password).then((credential) => {
+           
             const user = credential.user
 
             if (user) {
@@ -48,24 +51,24 @@ const Main = () => {
             }
 
         }).catch((error) => {
-            console.log(error.message)
+            console.log(error.code)
+            
+                setMessages("Email não cadastrado")
             
             setMessages("Email ou senha incorreto !")
         })
-
+        setMessages("")
     }
 
 
     // Register
     const handleRegister = () => {
 
-
-        // CheckiheckMessages(email) if the passwords are correct 
         if (password === registerConfirmPassword) {
-            createUserWithEmailAndPassword(auth, email, password).then((credential) => {
+            createUserWithEmailAndPassword(auth, email.trim(), password).then((credential) => {
                 const user = credential.user;
                 if (user) {
-                    // Adicionando nome do user no firebase 
+                    // Adding name in firebase
                     updateProfile(user, {
                         displayName: registerName,
                     }).then(() => {
