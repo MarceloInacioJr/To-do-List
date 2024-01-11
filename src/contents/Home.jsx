@@ -36,10 +36,8 @@ const Home = () => {
     // verificando se o usuario esta na pagina /home
     if (url.indexOf('/home') !== -1) {
       setCurrentUrl(true);
-      console.log('use');
     } else {
       setCurrentUrl(false);
-      console.log('use não');
     }
   }, [url]);
 
@@ -47,14 +45,17 @@ const Home = () => {
     // verificando se o usuario esta logado
     const inLog = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log('user logado');
         onValue(ref(db, `${auth.currentUser.uid}`), (inst) => {
           setTodos([]);
           const data = inst.val();
           if (data !== null) {
-            Object.values(data).forEach((todo) => {
-              setTodos((oldArray) => [...oldArray, todo]);
+            // classifying task
+            const sortedTodo = Object.values(data).sort((a, b) => {
+              return a.todo.date.localeCompare(b.todo.date)
             });
+            
+            setTodos(sortedTodo)
+
           }
         });
       } else {
@@ -112,7 +113,7 @@ const Home = () => {
 
         setCurrentTime(timer);
       } else {
-        console.log('Nao ativado');
+       
       }
     }, 1000);
 
@@ -166,8 +167,6 @@ const Home = () => {
   
     const dateFormated = date.replace(/-/g, '/').split("/").reverse().join('/');
     
-    console.log("datef ",dateFormated, "currentdate", currentDate)
-
     if (currentDate !== dateFormated) {
       return <><span className="span-day">{dateFormated}</span> -</>;
     } else {
@@ -184,7 +183,6 @@ const Home = () => {
     const taskDate =  date? new Date(date + 'T00:00:00') : null
     taskDate.setHours(0,0,0,0)
     
-    console.log(taskDate.getTime(),  currentDate.getTime())
     
     if (taskDate) {
       if (taskDate.getTime() < currentDate.getTime()) {
@@ -407,7 +405,7 @@ const Home = () => {
                     formatDate(todoItem.todo?.date) : 'Sem data'
 
                 )} <span>{
-                  todoItem.todo?.time || '00:00'}</span></div>
+                  todoItem.todo?.time || 'Horário não informada '}</span></div>
 
                 <div className="task-body">
                   <div className="title-task">
