@@ -17,10 +17,10 @@ const Main = () => {
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState("")
 
     // messages
-    const[messages, setMessages] = useState('')
+    const [messages, setMessages] = useState('')
 
     // view passord 
-    const[viewPassword, setViewPassword] = useState(false)
+    const [viewPassword, setViewPassword] = useState(false)
 
     const navigate = useNavigate()
 
@@ -41,20 +41,20 @@ const Main = () => {
 
 
         signInWithEmailAndPassword(auth, email.trim(), password).then((credential) => {
-           
+
             const user = credential.user
 
             if (user) {
                 navigate("/home")
-            } else{
-               
+            } else {
+
             }
 
         }).catch((error) => {
             console.log(error.code)
-            
-                setMessages("Email não cadastrado")
-            
+
+            setMessages("Email não cadastrado")
+
             setMessages("Email ou senha incorreto !")
         })
         setMessages("")
@@ -75,17 +75,18 @@ const Main = () => {
                         navigate("/home")
                     })
                 }
-            }).catch((error) => {   
+            }).catch((error) => {
                 console.log(error.message)
-                
-                if(password.length < 6 || registerConfirmPassword.length < 6){
-                setMessages('Por favor digite uma senha com mais de 6 caracteres!')
-                } 
+
+                if (password.length < 6 || registerConfirmPassword.length < 6) {
+                    setMessages('Por favor digite uma senha com mais de 6 caracteres!')
+                }
 
                 setMessages('Email já cadastrado!')
             })
         } else {
-             setMessages('Senhas divergentes!')
+                 
+                setMessages('Senhas divergentes!')
         }
     }
 
@@ -121,22 +122,22 @@ const Main = () => {
                                         <input type="password" id="login-input-password" name="password-login" onChange={e => setPassword(e.target.value)} />
                                         <div className="img-eye-body">
                                             {/* view password */
-                                            viewPassword?(
-                                                 
-                                                <div id="img-open-eye" title="Esconder senha" className="img-eye" onClick={_=>{
-                                                    setViewPassword(false)
-                                                    document.querySelector('#login-input-password').type='password'
-                                                }}></div>
-                                            ):(
-                                                <div id="img-close-eye" title="Ver senha" className="img-eye" onClick={_=>{
-                                                    setViewPassword(true)
-                                                    document.querySelector('#login-input-password').type='text'
+                                                viewPassword ? (
 
-                                                }}></div>
+                                                    <div id="img-open-eye" title="Esconder senha" className="img-eye" onClick={_ => {
+                                                        setViewPassword(false)
+                                                        document.querySelector('#login-input-password').type = 'password'
+                                                    }}></div>
+                                                ) : (
+                                                    <div id="img-close-eye" title="Ver senha" className="img-eye" onClick={_ => {
+                                                        setViewPassword(true)
+                                                        document.querySelector('#login-input-password').type = 'text'
+
+                                                    }}></div>
                                                 )
-                                            
+
                                             }
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -148,16 +149,14 @@ const Main = () => {
                                     <p className="form-legend">Não possui cadastro? <span className="form-login-span" onClick={_ => {
                                         setFormLogin(false)
                                         setMessages('')
-                                        }}>Cadastrar</span></p>
+                                    }}>Cadastrar</span></p>
                                 </div>
                             </div>
                         </div>
                         :
                         <div className="body-form">
                             <h1 className="form-register-title">Cadastro</h1>
-
                             <div className="form-register-content">
-
                                 <div className="input">
                                     <label htmlFor="nome-user">Nome</label>
                                     <input type="text" className="input" name="name-user" onChange={e => setRegisterName(e.target.value)} />
@@ -184,9 +183,9 @@ const Main = () => {
                             <div className="form-button">
                                 <button className="button-login" onClick={_ => { handleRegister() }}>Cadastrar e entrar</button>
                                 <p>Já possui cadastro?<span className="form-login-span" onClick={() => {
-                                     setFormLogin(true)  
-                                     setMessages('')
-                                     }}> Login</span></p>
+                                    setFormLogin(true)
+                                    setMessages('')
+                                }}> Login</span></p>
                             </div>
                         </div>
                 }

@@ -148,7 +148,7 @@ const Home = () => {
         time: todo.time || todoItem.todo.time,
       },
     });
-    setIsEdit(false); 
+    setIsEdit(false);
     clearInputs()
   }
 
@@ -160,22 +160,44 @@ const Home = () => {
 
   // format date in pt-br
   const formatDate = (date) => {
-    let dateObj = new Date()
-    let dateToday = dateObj.toISOString().split('T')[0].replace(/-/g, '/').split("/").reverse().join('/')
+    
+    const dateObj = new Date();
+    const currentDate = new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000).toISOString().split('T')[0].replace(/-/g, '/').split("/").reverse().join('/');
+  
+    const dateFormated = date.replace(/-/g, '/').split("/").reverse().join('/');
+    
+    console.log("datef ",dateFormated, "currentdate", currentDate)
 
-    let dateFormated = date.replace(/-/g, '/').split("/").reverse().join('/')
-    if (dateToday !== dateFormated) {
-      return <><span className="span-day">{dateFormated}</span> -</>
+    if (currentDate !== dateFormated) {
+      return <><span className="span-day">{dateFormated}</span> -</>;
     } else {
-      return <><span className="span-day">Hoje  </span> -</>
+      return <><span className="span-day">Hoje  </span> -</>;
     }
+  };
+  
 
-  }
-
-  // sort list
-  const sortedTodo = todos.sort((a, b) => {
-    return b.todo.timestamp - a.todo.timestamp
-  })
+  // Color task
+  const colorTask = (date) =>{
+    const currentDate = new Date()
+    currentDate.setHours(0,0,0,0)
+    
+    const taskDate =  date? new Date(date + 'T00:00:00') : null
+    taskDate.setHours(0,0,0,0)
+    
+    console.log(taskDate.getTime(),  currentDate.getTime())
+    
+    if (taskDate) {
+      if (taskDate.getTime() < currentDate.getTime()) {
+        return "task-red"; // Passado
+      } else if (taskDate.getTime() === currentDate.getTime()) {
+        return "task-green"; // Hoje
+      } else {
+        return "task-gray"; // Futuro
+      }
+    
+    }
+    return ""
+}
 
 
   // clear inputs 
@@ -188,6 +210,8 @@ const Home = () => {
       timestamp: 0,
     });
   }
+
+
 
   return (
     <div className="body-home">
@@ -357,10 +381,10 @@ const Home = () => {
                       </div>
                       <div className="buttons-edit" id='buttons-edit'>
                         <button className='button-edit disable' onClick={() => { handleConfirmEdit(editForm) }}>Confirmar</button>
-                        <button className='button-edit-cancel' onClick={() => { 
+                        <button className='button-edit-cancel' onClick={() => {
                           setIsEdit(false)
                           clearInputs()
-                          }}>Cancelar</button>
+                        }}>Cancelar</button>
                       </div>
                     </div>
                   </div>
@@ -371,59 +395,55 @@ const Home = () => {
           ) : null
 
         }
-        {
-          // list
-          todos.reverse().map((todoItem) => (
-            <div key={todoItem.uidd || 'falbackKey'} className="list-body">
-              <div className="list">
+        <div className="list">
+          {
+            // list
+            todos.reverse().map((todoItem) => (
+              <div key={todoItem.uidd || 'falbackKey'} className="list-body">
+
+
                 <div className="date-list">{(
                   todoItem.todo?.date ?
-                    formatDate(todoItem.todo.date) : 'Sem data'
+                    formatDate(todoItem.todo?.date) : 'Sem data'
+
                 )} <span>{
                   todoItem.todo?.time || '00:00'}</span></div>
 
-                <div className="task-content">
+                <div className="task-body">
                   <div className="title-task">
-                    <div className="triangle">
-                      <div className="figure">
-                        {todoItem.todo?.title.charAt(0).toUpperCase() + todoItem.todo.title.slice(1) || 'Sem titulo'}
+                    {todoItem.todo?.title.charAt(0).toUpperCase() + todoItem.todo.title.slice(1) || 'Sem titulo'}
+                  </div>
 
-                      </div>
+                  <div className={`task-content ${colorTask(todoItem.todo?.date)}`}>
+                    <div className="description-list">
+                      <p> {todoItem.todo?.describe.charAt(0).toUpperCase() + todoItem.todo.describe.slice(1) || 'Sem descrição'}</p>
                     </div>
 
-                  </div>
-                  <div className="description-list">
-                    <p> {todoItem.todo?.describe.charAt(0).toUpperCase() + todoItem.todo.describe.slice(1) || 'Sem descrição'}</p>
-                  </div>
-
-                  {
-                    <div className="btn-noEdit">
-                      <div className='btn-edit' onClick={() => {
-                        handleEdit(todoItem)
-                        setEditForm(todoItem)
-                      }
-                      }>
-                        <div id="img-button-editEditar"></div>
-                        <p>Editar</p>
-                      </div>
-                      <div className='btn-cancel' onClick={() => {
-                        handleDelete(todoItem.uidd)
+                    {
+                      <div className="btn-noEdit">
+                        <div className='btn-edit' onClick={() => {
+                          handleEdit(todoItem)
+                          setEditForm(todoItem)
+                        }
+                        }>
+                          <div id="img-button-editEditar"></div>
+                          <p>Editar</p>
+                        </div>
+                        <div className='btn-cancel' onClick={() => {
+                          handleDelete(todoItem.uidd)
                         }}>
-                        <div id="img-button-delete"></div>
-                        <p>Excluir</p>
+                          <div id="img-button-delete"></div>
+                          <p>Excluir</p>
+                        </div>
                       </div>
-                    </div>
 
-                  }
-                </div>
-                <div className="hr-content">
-                  {/* <div className="hr-line"></div> */}
+                    }
+                  </div>
                 </div>
               </div>
+            ))}
+        </div>
 
-            </div>
-
-          ))}
       </div>
     </div>
   );
