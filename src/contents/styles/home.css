@@ -32,6 +32,13 @@
     overflow-x: auto;
 }
 
+/* content-header */
+.content-header{
+    display: flex;
+    align-items: center;
+
+}
+
 /* content-date */
 .content-date{
     display: flex;
@@ -73,15 +80,52 @@
 .message-welcome #warning{
     font-size: 15px;
     color: #960505;
-
-
 }
-
 
 #message-name-user{
     font-weight: bolder;
 }
 
+/* Legend color  */
+
+.legend-body{
+    display: flex;
+    gap: 10px;
+}
+
+.content-legend{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.content-legend p{
+    color: #5e5e62;
+}
+
+.ball-red,
+.ball-green,
+.ball-gray{
+    height: 15px;
+    width: 15px;
+    border-radius: 100px;
+}
+
+.ball-red{
+    background-color: red;
+}
+
+.ball-green{
+    background-color: green;
+}
+
+.ball-gray{
+    background-color: gray;
+}
+
+
+/* List */
 .list-task-title{
     display: flex;
     align-items: start;
@@ -463,3 +507,44 @@
     background-color: #960505;
 }
 
+/* none task message */
+.none-task{
+
+    height: 50vh;
+    width: 100%;
+    margin-left: -2.4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.none-task p{
+    font-size: 20px;
+    color: #8c8888;
+}
+
+
+
+.mobile{
+    display: none;
+}
+
+/* mobile */
+@media (max-width:1000px) {
+    .mobile{
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        background-color: #e7e7e7;
+        z-index: 1;
+    }
+
+    .mobile p{
+        font-size: 20px;
+        color: #676666;
+    }
+}

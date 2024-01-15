@@ -65,6 +65,7 @@ const Main = () => {
     const handleRegister = () => {
 
         if (password === registerConfirmPassword) {
+            if(email.includes("@") && email.includes(".")){
             createUserWithEmailAndPassword(auth, email.trim(), password).then((credential) => {
                 const user = credential.user;
                 if (user) {
@@ -84,6 +85,8 @@ const Main = () => {
 
                 setMessages('Email já cadastrado!')
             })
+
+        }else{setMessages('Email inválido')}
         } else {
                  
                 setMessages('Senhas divergentes!')
@@ -91,6 +94,10 @@ const Main = () => {
     }
 
     return (
+        <>
+        <div className="mobile">
+             <p>Versão mobile em desenvolvimento.</p>
+        </div>
         <div className="body-main">
             <div className="content-main">
                 <div className="body-cover">
@@ -191,6 +198,7 @@ const Main = () => {
                 }
             </div>
         </div>
+        </>
     )
 }
 

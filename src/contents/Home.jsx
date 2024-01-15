@@ -49,9 +49,14 @@ const Home = () => {
           setTodos([]);
           const data = inst.val();
           if (data !== null) {
-            // classifying task
+            // classifying task date and hour
             const sortedTodo = Object.values(data).sort((a, b) => {
-              return a.todo.date.localeCompare(b.todo.date)
+              const dateComparation = a.todo.date.localeCompare(b.todo.date)
+              if(dateComparation !== 0){
+                return dateComparation
+              }else{
+                return a.todo.time.localeCompare(b.todo.time)
+              }
             });
             
             setTodos(sortedTodo)
@@ -165,7 +170,8 @@ const Home = () => {
     const dateObj = new Date();
     const currentDate = new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000).toISOString().split('T')[0].replace(/-/g, '/').split("/").reverse().join('/');
   
-    const dateFormated = date.replace(/-/g, '/').split("/").reverse().join('/');
+    const dateFormated = date ? date.replace(/-/g, '/').split("/").reverse().join('/') : currentDate;
+
     
     if (currentDate !== dateFormated) {
       return <><span className="span-day">{dateFormated}</span> -</>;
@@ -181,20 +187,26 @@ const Home = () => {
     currentDate.setHours(0,0,0,0)
     
     const taskDate =  date? new Date(date + 'T00:00:00') : null
-    taskDate.setHours(0,0,0,0)
-    
+    if (taskDate) {
+      taskDate.setHours(0, 0, 0, 0)
+    }
     
     if (taskDate) {
       if (taskDate.getTime() < currentDate.getTime()) {
         return "task-red"; // Passado
       } else if (taskDate.getTime() === currentDate.getTime()) {
         return "task-green"; // Hoje
-      } else {
+      }
+      else {
         return "task-gray"; // Futuro
       }
+
     
+    }else{
+      // corrigir essa parte
+      return "task-red"
     }
-    return ""
+
 }
 
 
@@ -212,12 +224,19 @@ const Home = () => {
 
 
   return (
+    <>
+     <div className="mobile">
+             <p>Versão mobile em desenvolvimento.</p>
+        </div>
     <div className="body-home">
       <div className="navBar" id="id-navbar">
         <NavBar handleCreateTask={() => setCreateTaskForm(true)}></NavBar>
       </div>
 
+      
       <div className="content-home" id="id-navbar">
+      
+      <div className="content-date-welcome">
         <div className="content-date">
           <p id="timer">{currentTime}</p>
           <p id="date-today">{dateToday()}</p>
@@ -227,6 +246,26 @@ const Home = () => {
           <p id='welcome'>Olá <span id='message-name-user'>{nameUser}</span> seja bem-vindo(a)</p>
           <p id='warning'>Atenção: fica ao seu critério excluir as tarefas.</p>
         </div>
+        </div>
+
+        {/* Legend color  */}
+        <div className="legend-body">
+          <div className="content-legend">
+            <div className="ball-red"></div>
+            <p>Expirado</p>
+          </div>
+
+          <div className="content-legend">
+            <div className="ball-green"></div>
+            <p>Hoje</p>
+          </div>
+
+          <div className="content-legend">
+            <div className="ball-gray"></div>
+            <p>Posteriormente</p>
+          </div>
+        </div>
+        
 
         <div className="list-task-title">
           <h1>Tarefas</h1>
@@ -272,6 +311,7 @@ const Home = () => {
                           name='e-date'
                           value={todo.date}
                           onChange={(e) => {
+
                             setTodo(prevTodo => ({ ...prevTodo, date: e.target.value }));
                           }}
                         />
@@ -396,13 +436,14 @@ const Home = () => {
         <div className="list">
           {
             // list
-            todos.reverse().map((todoItem) => (
+            todos.length > 0?
+            todos.map((todoItem) => (
               <div key={todoItem.uidd || 'falbackKey'} className="list-body">
 
 
                 <div className="date-list">{(
-                  todoItem.todo?.date ?
-                    formatDate(todoItem.todo?.date) : 'Sem data'
+                  todoItem.todo?.date?
+                    formatDate(todoItem.todo?.date) : ''
 
                 )} <span>{
                   todoItem.todo?.time || 'Horário não informada '}</span></div>
@@ -439,11 +480,17 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            )):<>
+             <div className="none-task">
+              <p>Nenhuma tarefa adicionada.</p>
+             </div>
+             </>
+            }
         </div>
 
       </div>
     </div>
+    </>
   );
 };
 
