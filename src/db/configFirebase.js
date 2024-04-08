@@ -8,8 +8,8 @@ import { getDatabase } from "firebase/database";
 
 
 const firebaseConfig = {
-  apiKey: "4",
-  authDomain: "todolist-1a4d1.firebaseapp.com",
+  apiKey: "",
+  authDomain: "",
   projectId: "",
   storageBucket: "",
   messagingSenderId: "",
